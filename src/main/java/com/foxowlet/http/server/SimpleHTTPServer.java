@@ -7,7 +7,8 @@ public class SimpleHTTPServer extends AbstractHTTPServer {
 
     @Override
     protected HttpResponse handleRequest(HttpRequest request) {
-        HttpResponse.Builder responseBuilder = HttpResponse.builder();
+        HttpResponse.Builder responseBuilder = HttpResponse.builder()
+                .setVersion(request.getVersion());
         if (request.getAddress().equals("/")) {
             String htmlPage = """
                         <html>
