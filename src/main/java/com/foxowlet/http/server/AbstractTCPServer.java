@@ -12,12 +12,10 @@ import java.util.concurrent.Executors;
 public abstract class AbstractTCPServer {
     private final int port;
     private final int threads;
-    private int readTimeout;
 
     protected AbstractTCPServer(int port, int threads) {
         this.port = port;
         this.threads = threads;
-        this.readTimeout = 0;
     }
 
     public int getPort() {
@@ -26,14 +24,6 @@ public abstract class AbstractTCPServer {
 
     public int getThreadsNumber() {
         return threads;
-    }
-
-    public int getReadTimeout() {
-        return readTimeout;
-    }
-
-    public void setReadTimeout(int timeout) {
-        readTimeout = timeout;
     }
 
     public void start() {
@@ -51,7 +41,6 @@ public abstract class AbstractTCPServer {
     private void handleConnection(Socket clientSocket) {
         try (InputStream inputStream = clientSocket.getInputStream();
              OutputStream outputStream = clientSocket.getOutputStream()) {
-            clientSocket.setSoTimeout(readTimeout);
             handleConnection(inputStream, outputStream);
         } catch (SocketTimeoutException e) {
             System.err.println("Read timeout for connection from client " + clientSocket.getRemoteSocketAddress());
