@@ -2,6 +2,7 @@ package com.foxowlet.http.server;
 
 import com.foxowlet.http.core.WebResource;
 import com.foxowlet.http.core.WebResourceDispatcher;
+import com.foxowlet.http.core.WebResourceDispatcherFactory;
 import com.foxowlet.http.protocol.HttpRequest;
 import com.foxowlet.http.protocol.HttpResponse;
 
@@ -11,13 +12,11 @@ import java.util.Optional;
 public class ConfigurableHTTPServer extends AbstractHTTPServer {
     private final WebResourceDispatcher dispatcher;
 
-    public ConfigurableHTTPServer(WebResourceDispatcher dispatcher) {
-        this.dispatcher = dispatcher;
-    }
-
-    public ConfigurableHTTPServer(WebResourceDispatcher dispatcher, int port, int threads) {
-        super(port, threads);
-        this.dispatcher = dispatcher;
+    public ConfigurableHTTPServer(ServerConfiguration config) {
+        super(Integer.parseInt(config.getProperty("server.port")),
+                Integer.parseInt(config.getProperty("server.num-threads")));
+        dispatcher = new WebResourceDispatcherFactory(config).configureDispatcher();
+        setServerName(config.getProperty("server.name"));
     }
 
     @Override

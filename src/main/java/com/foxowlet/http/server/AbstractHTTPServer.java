@@ -17,6 +17,8 @@ public abstract class AbstractHTTPServer extends AbstractTCPServer {
             // Mon, 23 May 2005 22:38:34 GMT
             "EE, dd MMM yyyy HH:mm:ss z");
 
+    private String serverName;
+
     public AbstractHTTPServer() {
         this(DEFAULT_PORT, DEFAULT_NUM_THREADS);
     }
@@ -44,8 +46,10 @@ public abstract class AbstractHTTPServer extends AbstractTCPServer {
     }
 
     private void preprocessResponse(HttpResponse.Builder responseBuilder, HttpRequest request) {
-        responseBuilder.setVersion(request.getVersion())
-                .setHeader("Server", "Simple HTTP server");
+        responseBuilder.setVersion(request.getVersion());
+        if (serverName != null ) {
+            responseBuilder.setHeader("Server", serverName);
+        }
     }
 
     private void processRequest(HttpRequest request, HttpResponse.Builder responseBuilder) {
@@ -61,6 +65,10 @@ public abstract class AbstractHTTPServer extends AbstractTCPServer {
     private void postprocessResponse(HttpResponse.Builder responseBuilder, HttpRequest request) {
         ZonedDateTime currentDateTime = LocalDateTime.now(ZoneId.of("UTC")).atZone(ZoneId.of("GMT"));
         responseBuilder.setHeader("Date", HTTP_DATE_FORMATTER.format(currentDateTime));
+    }
+
+    protected void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
     protected abstract void handleRequest(HttpRequest request, HttpResponse.Builder responseBuilder);
