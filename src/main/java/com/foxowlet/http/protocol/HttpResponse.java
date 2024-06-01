@@ -1,5 +1,7 @@
 package com.foxowlet.http.protocol;
 
+import com.foxowlet.http.core.WebResource;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -69,6 +71,11 @@ public class HttpResponse {
             setHeader("Content-Length", String.valueOf(body.length));
             this.body = body;
             return this;
+        }
+
+        public Builder setBody(WebResource resource) {
+            setHeader("Content-Type", resource.getContentType());
+            return setBody(resource.getBytes());
         }
 
         public Builder setBody(String body) {
