@@ -15,7 +15,7 @@ public class WebResourceDispatcherFactory {
     public WebResourceDispatcher configureDispatcher() {
         CompositeWebResourceDispatcher dispatcher = new CompositeWebResourceDispatcher();
         addIndexDispatcher(dispatcher);
-        addDirectoryDispatcher(dispatcher, "server.web.static-dir", FileWebPageDispatcher::new);
+        addDirectoryDispatcher(dispatcher, "server.web.static-dir", FileWebResourceDispatcher::new);
         addDirectoryDispatcher(dispatcher, "server.web.templates-dir", TemplateWebPageDispatcher::new);
         return dispatcher;
     }
