@@ -1,8 +1,9 @@
 package com.foxowlet.http.core;
 
-import java.net.URI;
+import com.foxowlet.http.protocol.HttpRequest;
+
 import java.util.Optional;
 
 public interface WebResourceDispatcher {
-    Optional<WebResource> dispatch(URI path);
+    Optional<WebResource> dispatch(HttpRequest request);
 }

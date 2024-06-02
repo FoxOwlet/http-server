@@ -6,7 +6,6 @@ import com.foxowlet.http.core.WebResourceDispatcherFactory;
 import com.foxowlet.http.protocol.HttpRequest;
 import com.foxowlet.http.protocol.HttpResponse;
 
-import java.net.URI;
 import java.util.Optional;
 
 public class ConfigurableHTTPServer extends AbstractHTTPServer {
@@ -21,7 +20,7 @@ public class ConfigurableHTTPServer extends AbstractHTTPServer {
 
     @Override
     protected void handleRequest(HttpRequest request, HttpResponse.Builder responseBuilder) {
-        Optional<WebResource> resource = dispatcher.dispatch(URI.create(request.getAddress()));
+        Optional<WebResource> resource = dispatcher.dispatch(request);
         if (resource.isPresent()) {
             responseBuilder
                     .setResponseCode(200)

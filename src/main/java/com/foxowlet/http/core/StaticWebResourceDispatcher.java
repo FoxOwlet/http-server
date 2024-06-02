@@ -1,6 +1,7 @@
 package com.foxowlet.http.core;
 
-import java.net.URI;
+import com.foxowlet.http.protocol.HttpRequest;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public class StaticWebResourceDispatcher implements WebResourceDispatcher {
     }
 
     @Override
-    public Optional<WebResource> dispatch(URI uri) {
-        return Optional.ofNullable(dispathMap.get(uri.getPath()));
+    public Optional<WebResource> dispatch(HttpRequest request) {
+        return Optional.ofNullable(dispathMap.get(request.getPath()));
     }
 }

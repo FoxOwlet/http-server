@@ -9,7 +9,7 @@ public class SimpleHTTPServer extends AbstractHTTPServer {
 
     @Override
     protected void handleRequest(HttpRequest request, HttpResponse.Builder responseBuilder) {
-        if (request.getAddress().equals("/")) {
+        if (request.getPath().equals("/")) {
             WebResource resource = new ResourceFileWebPage("index.html");
             responseBuilder
                     .setResponseCode(200)

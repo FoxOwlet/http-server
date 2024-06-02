@@ -1,5 +1,7 @@
 package com.foxowlet.http.core;
 
+import com.foxowlet.http.protocol.HttpRequest;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +16,9 @@ public class CompositeWebResourceDispatcher implements WebResourceDispatcher {
     }
 
     @Override
-    public Optional<WebResource> dispatch(URI uri) {
+    public Optional<WebResource> dispatch(HttpRequest request) {
         for (WebResourceDispatcher dispatcher : dispatchers) {
-            Optional<WebResource> resource = dispatcher.dispatch(uri);
+            Optional<WebResource> resource = dispatcher.dispatch(request);
             if (resource.isPresent()) {
                 return resource;
             }
